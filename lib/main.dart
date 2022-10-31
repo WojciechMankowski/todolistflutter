@@ -23,7 +23,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // tasks.addTask(Task("Testowy", "Obowiązki domowe"));
     // tasks.addTask(Task("Testowy2", "granie"));
+    List<String> docIds = [];
+    Future getDocId() async{
+      await FirebaseFirestore.instance.collection("tasks").get().then(
+              (value) => value.docs.forEach((element) {
+                print(element.reference);
+              } ));
 
+    }
+    getDocId();
     return MaterialApp(
         home: SizedBox(
             height: 250,

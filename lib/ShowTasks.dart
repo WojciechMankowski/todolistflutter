@@ -33,26 +33,3 @@ class _ShowTasksState extends State<ShowTasks> {
   }
 }
 
-
-class ShowTask2 extends StatelessWidget {
-  const ShowTask2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder(stream: FirebaseFirestore.instance.collection('tasks').snapshots(), builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) { 
-        if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView(
-            children: snapshot.data.docs.map((document) {
-              return Container(
-                child: Center(child: Text(document['text'])),
-              );
-               }).toList();
-       },),
-    );
-  }
-}
