@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/classes/Tasks.dart';
 import 'package:todolist/classes/Task.dart';
@@ -28,6 +29,30 @@ class _ShowTasksState extends State<ShowTasks> {
             task: this.tasks[i],
           )
       ],
+    );
+  }
+}
+
+
+class ShowTask2 extends StatelessWidget {
+  const ShowTask2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: StreamBuilder(stream: FirebaseFirestore.instance.collection('tasks').snapshots(), builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) { 
+        if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView(
+            children: snapshot.data.docs.map((document) {
+              return Container(
+                child: Center(child: Text(document['text'])),
+              );
+               }).toList();
+       },),
     );
   }
 }

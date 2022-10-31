@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/AddNewTask.dart';
 import 'package:todolist/ShowTasks.dart';
 import 'package:todolist/classes/Tasks.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'classes/Task.dart';
 
@@ -20,14 +23,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // tasks.addTask(Task("Testowy", "Obowiązki domowe"));
     // tasks.addTask(Task("Testowy2", "granie"));
+
     return MaterialApp(
         home: SizedBox(
             height: 250,
             child: Scaffold(
-              appBar: AppBar(
-                title: const Text('Lista zaadań'),
-              ),
-              body: ShowTasks(tasks: this.tasks),
-            )));
+                appBar: AppBar(
+                  title: const Text('Lista zaadań'),
+                ),
+                body: SingleChildScrollView(
+                    child: Column(
+                  children: [
+                    ShowTasks(tasks: this.tasks),
+                    AddNewTask(
+                      tasks: tasks,
+                    )
+                  ],
+                )))));
   }
 }

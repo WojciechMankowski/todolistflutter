@@ -1,59 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp();
+runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  static const String _title = 'Flutter Code Sample';
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: const Center(
-          child: MyStatefulWidget(),
-        ),
-      ),
-    );
-  }
+@override
+Widget build(BuildContext context) {
+	return MaterialApp(
+	title: 'Firebase',
+	home: AddData(),
+	);
+}
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+class AddData extends StatelessWidget {
+@override
+Widget build(BuildContext context) {
+	return Scaffold(
+	appBar: AppBar(
+		backgroundColor: Colors.green,
+		title: Text("geeksforgeeks"),
+	),
+	body: StreamBuilder(
+		stream: FirebaseFirestore.instance.collection('data').snapshots(),
+		builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+		if (!snapshot.hasData) {
+			return Center(
+			child: CircularProgressIndicator(),
+			);
+		}
 
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+		return ListView(
+			children: snapshot.data.docs.map((document) {
+			return Container(
+				child: Center(child: Text(document['text'])),
+			);
+			}).toList(),
+		);
+		},
+	),
+	);
 }
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-
-    return Checkbox(
-      checkColor: Colors.white,
-      fillColor: MaterialStateProperty.resolveWith(getColor),
-      value: isChecked,
-      onChanged: (bool? value) {
-        setState(() {
-          isChecked = value!;
-        });
-      },
-    );
-  }
 }
