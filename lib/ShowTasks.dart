@@ -16,14 +16,14 @@ class _ShowTasksState extends State<ShowTasks> {
   List<Task> tasks;
   @override
   Widget build(BuildContext context) {
-    for (int i = 0; i < this.tasks.length;) {
-      var task = this.tasks[i];
-      print("ZADANIE");
-      print(task.categories);
-    }
+    // for (int i = 0; i < this.tasks.length;) {
+    //   var task = this.tasks[i];
+    //   print("ZADANIE");
+    //   print(task.categories);
+    // }
     return Column(
       children: [
-        for (int i = 0; i < this.tasks.length;)
+        for (int i = 0; i < this.tasks.length; i++)
           TaskWidget(
             task: this.tasks[i],
           )

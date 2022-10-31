@@ -18,18 +18,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    tasks.addTask(Task("Testowy", "Obowiązki domowe"));
-    tasks.addTask(Task("Testowy2", "granie"));
+    // tasks.addTask(Task("Testowy", "Obowiązki domowe"));
+    // tasks.addTask(Task("Testowy2", "granie"));
     return MaterialApp(
-      home:  SizedBox(
-        height: 250,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('App title'),
-          ),
-          body: ShowTasks(tasks: this.tasks),
-        ))
-    );
-   
+        home: SizedBox(
+            height: 250,
+            child: Scaffold(
+              appBar: AppBar(
+                title: const Text('Lista zaadań'),
+              ),
+              body: ShowTasks(tasks: this.tasks),
+            )));
   }
 }
