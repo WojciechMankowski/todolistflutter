@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:todolistflutter/Task.dart';
+import 'package:todolistflutter/classes/Task.dart';
+import 'package:todolistflutter/classes/Tasks.dart';
+
+class ShowTasks extends StatefulWidget {
+  const ShowTasks({Key? key, required this.tasks}) : super(key: key);
+  final Tasks tasks;
+  @override
+  State<ShowTasks> createState() => _ShowTasksState(tasks.getTasks());
+}
+
+class _ShowTasksState extends State<ShowTasks> {
+  _ShowTasksState(this.tasks) {}
+  List<Task> tasks;
+  @override
+  Widget build(BuildContext context) {
+    // for (int i = 0; i < this.tasks.length;) {
+    //   var task = this.tasks[i];
+    //   print("ZADANIE");
+    //   print(task.categories);
+    // }
+    return Column(
+      children: [
+        for (int i = 0; i < this.tasks.length; i++)
+          TaskWidget(
+            task: this.tasks[i],
+          )
+      ],
+    );
+  }
+}
+
